@@ -1,0 +1,167 @@
+body, ul, li, h1, h2, a{
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+}
+header{
+  background-color: black;
+  color:white;
+  padding: 20px;
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+  text-align: center;
+  top:0;
+  left:0;
+}
+
+header h1{
+  color: white;
+  border: 8px solid white;
+  padding: 6px 12px;
+  display: inline-block;
+  border-radius: 40px;
+}
+
+.banner{
+  position: relative;
+}
+.banner img{
+  max-width: 100%;
+}
+.banner .welcome{
+  background-color: black;
+  color: white;
+  padding: 10px;
+  position: absolute;
+  left: 0%;
+  top: 30%;
+}
+.banner h2 {
+  font-size: 60px;
+}
+.banner h2 span{
+  font-size: 1.4em;
+}
+nav{
+  background-color: rgb(219, 219, 219);
+  padding: 20px;
+  position: sticky;
+  top: 103px;
+}
+nav ul{
+  white-space: nowrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+nav li{
+  width: 25%;
+  display: inline-block;
+  font-size: 24px;
+}
+nav li a{
+  text-decoration: none;
+  color: #4b4b4b;
+}
+nav li a.join{
+  color: black;
+}
+main{
+  max-width: 100%;
+  width: 1200px;
+  margin: 80px auto;
+  padding: 0px 40px;
+  box-sizing: border-box;
+}
+article h2{
+  color: #f900ff;
+  font-size: 48px;
+}
+article p{
+  line-height: 2em;
+  color: #4b4b4b;
+}
+.images{
+  text-align: center;
+  margin: 80px 0;
+  white-space: nowrap;
+}
+.images li{
+  display: inline-block;
+  width: 40%;
+  margin: 20px 5%;
+}
+.images li img{
+  max-width: 100%;
+}
+section.join{
+  background: #f4f4f4;
+  text-align: center;
+  padding: 60px 20px;
+  color: #4b4b4b;
+}
+section.join h2{
+  font-size: 30px;
+}
+form input{
+  margin: 20px 0;
+  padding: 10px 20px;
+  font-size: 24px;
+  border-radius: 28px;
+  border: 4px solid white;
+}
+footer{
+  background: black;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+/* pseudo classes */
+
+nav li a:hover{
+  text-decoration: underline;
+  color: #f900ff;
+  padding: 3px;
+}
+.images li:hover{
+  position: relative;
+  top:-2px;
+}
+form input:focus{
+  border: 4px dashed #4b4b4b;
+  outline: none;
+}
+article p::first-line{
+ font-weight: bold;
+ font-size: larger;
+}
+p::selection{
+  background-color: rgb(249,0,255);
+}
+
+/* responsive styles */
+
+@media screen and (max-width: 1400px){
+
+  .banner .welcome h2{
+    font-size: 50px;
+  }
+  nav li{
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 960px){
+
+  .banner .welcome h2{
+    font-size: 30px;
+  }
+}
+
+@media screen and (max-width: 700px){
+
+  .banner .welcome h2{
+    font-size: 10px;
+  }
+}
