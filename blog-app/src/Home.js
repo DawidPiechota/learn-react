@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Bloglist from './Bloglist';
+import env from './env';
 
 const Home = () => {
 
-const blogsEndpoint = "http://192.168.1.37:8000/blogs";
 const [blogs, setBlogs] = useState(null);
 const [isPending, setIsPending] = useState(true);
 const [errorMessage, setErrorMessage] = useState(null);
@@ -20,7 +20,7 @@ useEffect(() => {
     setErrorMessage(null);
   }
   setTimeout(() => {
-    fetchBlogs(blogsEndpoint).catch( e => {
+    fetchBlogs(`http://${env.LOCAL_IP}:8000/blogs`).catch( e => {
       setErrorMessage("We are experiencing technical difficulties. Please try again in a few minutes");
       setIsPending(false);
       console.log('There has been a problem with fetchBlogs(): ' + e.message);

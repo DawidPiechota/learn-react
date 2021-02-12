@@ -1,1 +1,1 @@
-npx json-server --host 192.168.1.37 --watch data/db.json --port 8000
+npx json-server --host <LOCAL_IP> --watch data/db.json --port 8000
