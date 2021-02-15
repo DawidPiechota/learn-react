@@ -24,11 +24,11 @@ const useFetch = (url) => {
           console.log('fetch aborted');
           return;
         }
-        setErrorMessage("We are experiencing technical difficulties. Please try again in a few minutes");
+        setErrorMessage("This blog doesnt exist!");
         setIsPending(false);
         console.log('There has been a problem with fetchBlogs(): ' + e.message);
       });
-    },1000) // Fake request delay
+    },200) // Fake request delay
 
     return () => abortCtrl.abort();
   }, [url]);
