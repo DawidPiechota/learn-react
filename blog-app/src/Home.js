@@ -1,32 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import Bloglist from './Bloglist';
 import env from './env';
+import useFetch from './useFetch';
 
 const Home = () => {
-
-const [blogs, setBlogs] = useState(null);
-const [isPending, setIsPending] = useState(true);
-const [errorMessage, setErrorMessage] = useState(null);
-
-useEffect(() => {
-  async function fetchBlogs(endpoint) {
-    const response =  await fetch(endpoint);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const jsonData = await response.json();
-    setBlogs(jsonData);
-    setIsPending(false);
-    setErrorMessage(null);
-  }
-  setTimeout(() => {
-    fetchBlogs(`http://${env.LOCAL_IP}:8000/blogs`).catch( e => {
-      setErrorMessage("We are experiencing technical difficulties. Please try again in a few minutes");
-      setIsPending(false);
-      console.log('There has been a problem with fetchBlogs(): ' + e.message);
-    });
-  },1000) // Fake request delay
-}, []);
+  const { data: blogs, isPending, errorMessage } = useFetch(`http://${env.LOCAL_IP}:8000/blogs`);
 
     return ( 
         <div className='home'>
