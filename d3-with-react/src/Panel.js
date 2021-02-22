@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Visualise from './Visualise';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
 
 
@@ -118,36 +117,7 @@ const Panel = () => {
   }, [path]);
 
   return (
-      <Grid
-        container
-        spacing={3}
-        alignItems="center"
-        justify="center"
-      >
-        <Grid item xs={12}>
-          <Visualise locations={locations} links={links} svgWidth={svgWidth} svgHeight={svgHeight}/>
-        </Grid>
-        <Grid item xs={3}>
-          <Button variant="contained" color="primary" onClick={shufflePath}>
-            Draw path
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button variant="contained" color="primary" onClick={randomLocations}>
-            Random locations
-          </Button>
-        </Grid>
-        <Grid item xs={3}>
-          <Button variant="contained" color="primary" onClick={getBetterPath}>
-            Solve
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {totalPathLength}
-          </Typography>
-        </Grid>
-      </Grid>
+      <Visualise />
    );
 }
  
