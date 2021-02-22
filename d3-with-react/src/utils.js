@@ -1,5 +1,5 @@
 function shuffle(array) {
-  var m = array.length, t, i;
+  let m = array.length, t, i;
   while (m) {
     i = Math.floor(Math.random() * m--);
     t = array[m];
@@ -9,10 +9,29 @@ function shuffle(array) {
   return array;
 }
 
-function pointDistance(x1, y1, x2, y2) {
+function swapTwoElements(array) {
+  let x = Math.floor(Math.random() * array.length);
+  let y = Math.floor(Math.random() * array.length);
+  [ array[x], array[y] ] = [ array[y], array[x] ];
+}
+
+function getPointDistance(x1, y1, x2, y2) {
   const a = x1 - x2;
   const b = y1 - y2;
   return Math.sqrt( a*a + b*b );
+}
+
+function getPathCost(path, loc) {
+  let sum = 0;
+  for(let i = 0; i < path.length; i++) {
+    sum+= getPointDistance(
+      loc[path[i]].x,
+      loc[path[i]].y,
+      loc[path[(i + 1) % path.length]].x,
+      loc[path[(i + 1) % path.length]].y
+    );
+  }
+  return sum;
 }
 
 export function getRandomInt(min, max) {
@@ -26,15 +45,24 @@ export function getRandomPath(loc) {
   return shuffle(newPath);
 }
 
-export function getPathCost(path, loc) {
-  let sum = 0;
-  for(let i = 0; i < path.length; i++) {
-    sum+= pointDistance(
-      loc[path[i]].x,
-      loc[path[i]].y,
-      loc[path[(i + 1) % path.length]].x,
-      loc[path[(i + 1) % path.length]].y
-    );
+export function* getBetterPath(loc) {
+  let path = getRandomPath(loc);
+  let bestCost = getPathCost(path, loc);
+  let currentCost = bestCost;
+  let currentPath = path.slice();
+  let bestPath = path.slice();
+  for(let i = 0; i < 200000000; i ++) {
+    currentPath = shuffle(currentPath);
+    //swapTwoElements(currentPath);
+    currentCost = getPathCost(currentPath, loc);
+    if(currentCost < bestCost) {
+      console.log(i + ": " + Math.floor(bestCost));
+      bestPath = currentPath.slice();
+      bestCost = currentCost;
+      yield [bestPath, bestCost];
+    }
   }
-  return sum;
+  //setPath(bestPath);
+  //setTotalPathLength(Math.floor(bestCost));
+  //setTimeout(getBetterPath, 1000);
 }

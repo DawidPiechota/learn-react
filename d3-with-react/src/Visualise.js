@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 import { useRef, useEffect, useState } from "react";
 import { select } from "d3";
-import { getRandomInt, getRandomPath } from "./utils.js";
+import { getRandomInt, getRandomPath, getBetterPath } from "./utils.js";
 
 const Visualise = () => {
   const [locations, setLocations] = useState([{x: 20, y: 50},{x:100, y: 400}]);
@@ -73,7 +73,7 @@ const Visualise = () => {
   }
 
   function getRandomLocations()  {
-    let times = 10;
+    let times = 14;
     let newLocations = [];
     for(let i = 0; i < times; i++) {
       newLocations.push({x: getRandomInt(30, svgWidth-30), y: getRandomInt(30, svgHeight-30), id: i});
@@ -108,6 +108,28 @@ const Visualise = () => {
     return newLinks;
   }
 
+  function solve() {
+    let solver = getBetterPath(locations);
+    const innerSolve = () => {
+      const {
+        done,
+        value: [
+          bestPath,
+          bestCost
+        ] = []
+      } = solver.next();
+      if(!done) {
+        //console.log(bestPath, bestCost);
+        setLinks(convertPathToLinks(bestPath, locations))
+        setTotalPathLength(Math.floor(bestCost));
+        setTimeout(innerSolve, 800);
+        return;
+      }
+      console.log("done");
+    }
+    innerSolve();
+  }
+
   useEffect(() => {
     drawLinks();
   },[links])
@@ -138,9 +160,7 @@ const Visualise = () => {
         </Button>
       </Grid>
       <Grid item xs={3}>
-        <Button variant="contained" color="primary" 
-        //onClick={getBetterPath}
-        >
+        <Button variant="contained" color="primary" onClick={solve}>
           Solve
         </Button>
       </Grid>
