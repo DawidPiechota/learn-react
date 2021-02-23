@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
 import { useRef, useEffect, useState } from "react";
 import { select } from "d3";
-import { getRandomInt, getRandomPath, getBetterPath } from "./utils.js";
+import { getRandomInt, getRandomPath, getBetterPath, getLocalOptimum } from "./utils.js";
 
 const Visualise = () => {
   const [locations, setLocations] = useState([{x: 20, y: 50},{x:100, y: 400}]);
@@ -12,6 +12,7 @@ const Visualise = () => {
   const svgRef = useRef();
   const svgWidth = 1025;
   const svgHeight = 630;
+  const locationsNumber = 10;
 
   function drawLinks({clear = false} = {}) {
     const svg = select(svgRef.current);
@@ -49,8 +50,10 @@ const Visualise = () => {
           .attr("stroke-width", 2),
       update => update
           .attr("stroke-width", 2)
+          .attr("stroke", "green")
         .call(update => update.transition(t)
-          .attr("d", link)),
+          .attr("d", link)
+          .attr("stroke", "black")),
       exit => exit
           .remove()
       );
@@ -73,9 +76,8 @@ const Visualise = () => {
   }
 
   function getRandomLocations()  {
-    let times = 14;
     let newLocations = [];
-    for(let i = 0; i < times; i++) {
+    for(let i = 0; i < locationsNumber; i++) {
       newLocations.push({x: getRandomInt(30, svgWidth-30), y: getRandomInt(30, svgHeight-30), id: i});
     }
     return newLocations;
@@ -110,6 +112,28 @@ const Visualise = () => {
 
   function solve() {
     let solver = getBetterPath(locations);
+    const innerSolve = () => {
+      const {
+        done,
+        value: [
+          bestPath,
+          bestCost
+        ] = []
+      } = solver.next();
+      if(!done) {
+        //console.log(bestPath, bestCost);
+        setLinks(convertPathToLinks(bestPath, locations))
+        setTotalPathLength(Math.floor(bestCost));
+        setTimeout(innerSolve, 800);
+        return;
+      }
+      console.log("done");
+    }
+    innerSolve();
+  }
+
+  function solve2() { //not finished yet
+    let solver = getLocalOptimum(locations);
     const innerSolve = () => {
       const {
         done,

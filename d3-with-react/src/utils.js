@@ -9,7 +9,7 @@ function shuffle(array) {
   return array;
 }
 
-function swapTwoElements(array) {
+function swapTwoRandomElements(array) {
   let x = Math.floor(Math.random() * array.length);
   let y = Math.floor(Math.random() * array.length);
   [ array[x], array[y] ] = [ array[y], array[x] ];
@@ -34,6 +34,18 @@ function getPathCost(path, loc) {
   return sum;
 }
 
+function* swapConsecutiveElements(path) {
+  let base = path.slice();
+  for(let i = 0; i < base.length; i ++) {
+    for(let j = i; j < base.length; j ++) {
+      if( i === j ) continue;
+      [ base[i], base[j] ] = [ base[j], base[i] ];
+      yield base.slice();
+      base = path.slice();
+    }
+  }
+}
+
 export function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -51,9 +63,9 @@ export function* getBetterPath(loc) {
   let currentCost = bestCost;
   let currentPath = path.slice();
   let bestPath = path.slice();
-  for(let i = 0; i < 200000000; i ++) {
-    currentPath = shuffle(currentPath);
-    //swapTwoElements(currentPath);
+  for(let i = 0; i < 2000000; i ++) {
+    //currentPath = shuffle(currentPath);
+    swapTwoRandomElements(currentPath);
     currentCost = getPathCost(currentPath, loc);
     if(currentCost < bestCost) {
       console.log(i + ": " + Math.floor(bestCost));
@@ -62,7 +74,25 @@ export function* getBetterPath(loc) {
       yield [bestPath, bestCost];
     }
   }
-  //setPath(bestPath);
-  //setTotalPathLength(Math.floor(bestCost));
-  //setTimeout(getBetterPath, 1000);
+}
+
+// Not finished, runs only one full swapConsecutiveElements generation cycle
+export function* getLocalOptimum(loc) {
+  let path = getRandomPath(loc);
+  let bestCost = getPathCost(path, loc);
+  let currentCost = bestCost;
+  let currentPath = path.slice();
+  let bestPath = path.slice();
+
+  for( let currentPath of swapConsecutiveElements(path)) {
+    let currentCost = getPathCost(currentPath, loc);
+
+    if(currentCost < bestCost) {
+      console.log(Math.floor(bestCost));
+      bestPath = currentPath.slice();
+      bestCost = currentCost;
+      yield [bestPath, bestCost];
+    }
+  }
+  return;
 }
