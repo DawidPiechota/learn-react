@@ -21,7 +21,7 @@ export default function App() {
     >
       <Grid item xs={12}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Base wireframe
+          Travelling salesman problem
         </Typography>
       </Grid>
       <Grid item xs={12}>

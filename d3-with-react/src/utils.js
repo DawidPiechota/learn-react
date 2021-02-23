@@ -21,7 +21,7 @@ function getPointDistance(x1, y1, x2, y2) {
   return Math.sqrt( a*a + b*b );
 }
 
-function getPathCost(path, loc) {
+export function getPathCost(path, loc) {
   let sum = 0;
   for(let i = 0; i < path.length; i++) {
     sum+= getPointDistance(
@@ -63,12 +63,12 @@ export function* getBetterPath(loc) {
   let currentCost = bestCost;
   let currentPath = path.slice();
   let bestPath = path.slice();
-  for(let i = 0; i < 2000000; i ++) {
+  for(let i = 0; i < 20000000; i ++) {
     //currentPath = shuffle(currentPath);
     swapTwoRandomElements(currentPath);
     currentCost = getPathCost(currentPath, loc);
     if(currentCost < bestCost) {
-      console.log(i + ": " + Math.floor(bestCost));
+      //console.log(i + ": " + Math.floor(bestCost));
       bestPath = currentPath.slice();
       bestCost = currentCost;
       yield [bestPath, bestCost];
@@ -76,7 +76,7 @@ export function* getBetterPath(loc) {
   }
 }
 
-// Not finished, runs only one full swapConsecutiveElements generation cycle
+
 export function* getLocalOptimum(loc) {
   let path = getRandomPath(loc);
   let bestCost = getPathCost(path, loc);
@@ -84,15 +84,28 @@ export function* getLocalOptimum(loc) {
   let currentPath = path.slice();
   let bestPath = path.slice();
 
-  for( let currentPath of swapConsecutiveElements(path)) {
-    let currentCost = getPathCost(currentPath, loc);
+  let foundOne = true;
+  while(foundOne) {
+    foundOne = false;
 
-    if(currentCost < bestCost) {
-      console.log(Math.floor(bestCost));
-      bestPath = currentPath.slice();
-      bestCost = currentCost;
-      yield [bestPath, bestCost];
+    neighbourCheck:
+    for(let i = 0; i < currentPath.length; i ++) {
+      for(let j = i; j < currentPath.length; j ++) {
+        if( i === j ) continue;
+  
+        [ currentPath[i], currentPath[j] ] = [ currentPath[j], currentPath[i] ];
+        currentCost = getPathCost(currentPath, loc);
+        if(currentCost < bestCost) {
+          foundOne = true;
+          bestPath = currentPath.slice();
+          bestCost = currentCost;
+          yield [bestPath, bestCost];
+          break neighbourCheck;
+        } else {
+          [ currentPath[j], currentPath[i] ] = [ currentPath[i], currentPath[j] ];
+        }
+      }
     }
+
   }
-  return;
 }
