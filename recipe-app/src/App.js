@@ -7,6 +7,7 @@ import "./App.css"
 
 function App() {
 
+  // bad practice, but this is API is free
   const API_ID = "2ee0d351";
   const API_KEY = "50aa7b543fca6b66c85b35686ffe11af";
   const urlPrefix = "https://api.edamam.com/search?";
@@ -49,7 +50,7 @@ function App() {
           onChange={updateSearch}
         ></input>
         <button className="search-button" type="submit">
-          yeet
+          search
         </button>
       </form>
       <div className="recipes">
