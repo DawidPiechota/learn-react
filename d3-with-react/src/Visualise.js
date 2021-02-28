@@ -1,18 +1,20 @@
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Typography } from '@material-ui/core';
+import { spacing } from '@material-ui/system';
 import { useRef, useEffect, useState } from "react";
 import { select } from "d3";
 import { getRandomInt, getRandomPath, getBetterPath, getLocalOptimum, getPathCost } from "./utils.js";
 
 const Visualise = () => {
-  const [locations, setLocations] = useState([{x: 20, y: 50},{x:100, y: 400}]);
+  const [locations, setLocations] = useState([{"x":785,"y":504,"id":0},{"x":729,"y":453,"id":1},{"x":280,"y":36,"id":2},{"x":986,"y":237,"id":3},{"x":262,"y":314,"id":4},{"x":127,"y":158,"id":5},{"x":266,"y":409,"id":6},{"x":237,"y":406,"id":7},{"x":396,"y":533,"id":8},{"x":312,"y":537,"id":9},{"x":964,"y":218,"id":10},{"x":815,"y":503,"id":11}]);
   const [links, setLinks] = useState([]);
   const [totalPathLength, setTotalPathLength] = useState(0);
+  const [color, setColor] = useState("black");
   const svgRef = useRef();
   const svgWidth = 1025;
   const svgHeight = 630;
-  const locationsNumber = 15;
+  const locationsNumber = 12;
 
   function drawLinks({clear = false} = {}) {
     const svg = select(svgRef.current);
@@ -109,6 +111,8 @@ const Visualise = () => {
   }
 
   function getRandomLocations()  {
+    setColor("black");
+    setTotalPathLength(0);
     let newLocations = [];
     for(let i = 0; i < locationsNumber; i++) {
       newLocations.push({x: getRandomInt(30, svgWidth-30), y: getRandomInt(30, svgHeight-30), id: i});
@@ -144,6 +148,7 @@ const Visualise = () => {
   }
 
   function solve() {
+    setColor("black");
     let solver = getBetterPath(locations);
     const innerSolve = () => {
       const {
@@ -160,11 +165,13 @@ const Visualise = () => {
         return;
       }
       console.log("done");
+      setColor("green");
     }
     innerSolve();
   }
 
   function solve2() {
+    setColor("black");
     let solver = getLocalOptimum(locations);
     const innerSolve = () => {
       const {
@@ -181,6 +188,7 @@ const Visualise = () => {
         return;
       }
       console.log("done");
+      setColor("green");
     }
     innerSolve();
   }
@@ -195,6 +203,7 @@ const Visualise = () => {
   }, [locations]);
 
   return (
+    <>
       <Grid
       container
       spacing={3}
@@ -204,8 +213,9 @@ const Visualise = () => {
       <Grid item xs={12}>
         <svg style={{outline: 'thin solid black'}} ref={svgRef} height={svgHeight} width={svgWidth}></svg>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <Button variant="contained" color="primary" onClick={() => {
+          setColor("black");
           const path = getRandomPath(locations);
           setTotalPathLength(Math.floor(getPathCost(path, locations)));
           setLinks(convertPathToLinks(path, locations));
@@ -213,22 +223,35 @@ const Visualise = () => {
           Draw random path
         </Button>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <Button variant="contained" color="primary" onClick={() => setLocations(getRandomLocations())}>
           Random locations
         </Button>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <Button variant="contained" color="primary" onClick={solve2}>
-          Solve
+          2-swap solve
         </Button>
       </Grid>
+      <Grid item xs={2}>
+        <Button variant="contained" color="primary" onClick={solve}>
+          Random solve
+        </Button>
+      </Grid>
+    </Grid>
+    <Grid
+      container
+      spacing={5}
+      alignItems="center"
+      justify="center"
+    >
       <Grid item xs={12}>
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography style={{color: color}} variant="h4">
           Total length: {totalPathLength}
         </Typography>
       </Grid>
     </Grid>
+    </>
   );
 }
  
