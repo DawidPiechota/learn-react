@@ -21,7 +21,8 @@ export const createPost = (post) => async (dispatch) => {
 
     dispatch({type: CREATE, payload: data});
   } catch (error) {
-    console.log(error);
+    alert("You need to login again");
+    window.location.reload();
   }
 }
 
@@ -33,7 +34,8 @@ export const updatePost = (id, post) => async (dispatch) => {
 
     dispatch({ type: UPDATE, payload: data});
   } catch (error) {
-    console.log(error);
+    alert("You need to login again");
+    window.location.reload();
   }
 }
 
@@ -46,7 +48,8 @@ export const deletePost = (id) => async (dispatch) => {
     dispatch({ type: DELETE, payload: id})
 
   } catch (error) {
-    console.log(error);
+    alert("You need to login again");
+    window.location.reload();
   }
 }
 
@@ -58,6 +61,7 @@ export const likePost = (id) => async (dispatch) => {
 
     dispatch({ type: UPDATE, payload: data});
   } catch (error) {
-    console.log(error);
+    alert("You need to login again");
+    window.location.reload();
   }
 }
