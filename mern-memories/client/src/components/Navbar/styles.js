@@ -40,4 +40,13 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: "lightgray",
   },
+  [theme.breakpoints.down("sm")]: {
+    appBar: {
+      flexDirection: 'column',
+    },
+    toolbar: {
+      width: '300px',
+      justifyContent: 'center',
+    },
+  },
 }));
