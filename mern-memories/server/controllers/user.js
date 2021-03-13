@@ -5,12 +5,10 @@ import User from '../models/user.js';
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
-  console.log(process.env.JWT_SECRET);
 
   try {
     const existingUser = await User.findOne({ email });
     if(!existingUser) res.status(404).json({ message: "User doesn't exist" });
-    console.log(password, existingUser.password);
 
     const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
     if(!isPasswordCorrect) return res.status(400).json({ message: "Invalid credentials" });
@@ -19,7 +17,7 @@ export const signin = async (req, res) => {
       email: existingUser.email,
       id: existingUser._id },
       process.env.JWT_SECRET,
-      { exppiresIn: process.env.JWT_EXPIRES_IN }
+      { expiresIn: process.env.JWT_EXPIRES_IN }
     );
     res.status(200).json({result: existingUser, token});
   } catch (error) {
@@ -47,7 +45,7 @@ export const signup = async (req, res) => {
       email: result.email,
       id: result._id },
       process.env.JWT_SECRET,
-      { exppiresIn: process.env.JWT_EXPIRES_IN }
+      { expiresIn: process.env.JWT_EXPIRES_IN }
     );
 
     res.status(200).json({result, token});
