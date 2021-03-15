@@ -26,6 +26,8 @@ Logged in
 :-------------------------:
 ![main-page-logged-in](./mern-memories/screenshots/main-page-logged-in.jpg)
 
+---
+
 ## Travelling salesman solver
 
 folder: [d3-with-react](d3-with-react)  
@@ -47,6 +49,7 @@ Solved
 :-------------------------:
 ![solved](./d3-with-react/screenshots/2.jpg)
 
+---
 
 # Article publishing platform
 
@@ -64,6 +67,8 @@ Adding article           |  Article view
 :-------------------------:|:-------------------------:
 ![create-article](./blog-app/screenshots/create-article.jpg)  |  ![article-view](./blog-app/screenshots/article-view.jpg)
 
+---
+
 # HTML+CSS
 
 folder: [just-html-css](just-html-css)
@@ -76,6 +81,8 @@ A static website written in pure HTML and CSS
 ![middle](./just-html-css/screenshots/2.jpg) |  ![bottom](./just-html-css/screenshots/3.jpg)
 :-------------------------:|:-------------------------:
 
+---
+
 # routing-app
 
 folder: [routing-app](routing-app)
@@ -84,6 +91,8 @@ Browse latest Fortnite items using free Fotnite API
 
 ![main-page](./routing-app/screenshots/main-page.jpg)  |  ![item-details](./routing-app/screenshots/item-details.jpg)
 :-------------------------:|:-------------------------:
+
+---
 
 # recipe-app
 
