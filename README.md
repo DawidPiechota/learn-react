@@ -104,3 +104,9 @@ Recipe finder with Edamam API.
 ![main-page](./recipe-app/screenshots/main-page.jpg)  |  ![mobile](./recipe-app/screenshots/mobile.jpg)
 :-------------------------:|:-------------------------:
 
+---
+
+```
+console.log('%c✉'+[...`🍔🍑🍧🍙🍔🍠🍙🍕🍓🍘🍟🍤🍑🎤🎢🌰🍗🍝🍑🍙🍜🐼🍓🍟🍝
+`].map(a=>String.fromCodePoint(a.charCodeAt(1)%123)).join(''),"font:2em system-ui;"); 
+```
