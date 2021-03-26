@@ -7,7 +7,7 @@ This repository consists of small-scale projects listed below in reverse chronol
 Instagram-like social website that allows users to post photos of memories alongside of short description.
 
 folder: [mern-memories](mern-memories)  
-live site: [https://dp-memories.netlify.app/](https://dp-memories.netlify.app/)
+live site: [https://dp-memories.netlify.app/](https://dp-memories.netlify.app/) (probable cold-start)
 
 Key features:
 - MERN stack: React <--> Node + Express <--> MongoDb Atlas,
