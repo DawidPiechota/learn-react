@@ -1,0 +1,7 @@
+Performance:
+- Add image compression to capped size 
+- Change image storage from base64 string to cloud hosting
+- Lazy-loading for images
+Features:
+- Comments
+- Detailed view of memory
